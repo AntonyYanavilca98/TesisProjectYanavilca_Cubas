@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>Bienvenido Perfil</h1>
+    <p>
+        <%= usuario._id %>
+    </p>
+    <p>
+        <%= usuario.nombres %>
+    </p>
+    <p>
+        <%= usuario.apellidos %>
+    </p>
+    <p>
+        <%= usuario.email %>
+    </p>
+    <a href="/productos">PRODUCTOS</a>
+    <% if( usuario.role == 'ADMIN_ROLE' ) { %>
+        <a href="/admin/admin_user">USUARIOS</a>
+        <% } %>
+
+            <a href="/logout">Salir</a>
+</body>
+
+</html>

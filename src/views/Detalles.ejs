@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agregar producto</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <style>
+        .fxform {
+            margin: 20px 20px 0;
+            padding: 0 0 20px;
+        }
+        
+        .fxform fieldset {
+            border: none;
+            margin: 0 0 7px;
+            padding: 0 0 10px;
+        }
+        
+        .fxform legend {
+            line-height: 100%;
+            text-transform: uppercase;
+            font-family: Lucida Grande, Tahoma, Arial, Verdana, sans-serif;
+            font-size: 9pt;
+            font-weight: 700;
+            color: #555;
+            margin-bottom: 10px;
+            padding: 0;
+        }
+        
+        .fxform fieldset div {
+            position: relative;
+            margin-top: 1px;
+            padding: 10px 5px 8px 9px;
+        }
+        
+        .fxform label {
+            color: #222;
+            font-size: 95%;
+            font-weight: 700;
+            margin-right: 10px;
+        }
+        
+        .fxform .guideline {
+            background: #F5F5F5 none repeat scroll 0 0;
+            border: 1px solid #E6E6E6;
+            color: #444;
+            font-size: 80%;
+            left: 100%;
+            line-height: 130%;
+            position: absolute;
+            top: 0;
+            visibility: hidden;
+            width: 42%;
+            z-index: 1000;
+            margin: 0 0 0 8px;
+            padding: 8px 10px 9px;
+        }
+        
+        .fxform input[type=text],
+        .fxform input[type=password],
+        .fxform select,
+        .fxform textarea {
+            height: 22px;
+            font-size: 11pt;
+            margin-top: 5px;
+            background: #FFF url(/images/shadow.gif) repeat-x scroll center top;
+            color: #333;
+            width: 350px;
+            border-color: #7C7C7C #c3c3c3 #ddd;
+            border-style: solid;
+            border-width: 1px;
+        }
+        
+        .fxform input[type=submit],
+        .fxform input[type=button] {
+            color: #666;
+            background: #e4e4e4;
+            text-align: center;
+            border-color: #c3c3c3;
+            border-style: solid;
+        }
+        
+        .fxform .choice {
+            color: #444;
+            display: block;
+            font-size: 100%;
+            line-height: 1.4em;
+            margin: -25px 0 0 20px;
+            padding: 4px 0 5px;
+        }
+        
+        .fxform ul {
+            list-style: none;
+            padding: 5px 0 0 10px;
+        }
+        
+        .fxform .error {
+            color: red;
+        }
+        
+        .fxform .errorField {
+            border: 1px solid red!important;
+        }
+        
+        .fxform fieldset div:hover {
+            background-color: #fff7c0;
+        }
+        
+        .fxform div:hover .guideline,
+        form div:focus .guideline {
+            visibility: visible;
+        }
+        
+        .editor div {
+            margin: 0!important;
+            padding: 0!important;
+        }
+        
+        #texto {
+            height: 150px;
+            width: 500px;
+        }
+    </style>
+</head>
+
+<body>
+    <div>
+        <form>
+            <div class="form-group">
+                <label for="exampleFormControlInput1">Nombre</label>
+                <input type="text" name="nombre" class="form-control" value="<%= data.nombre %>" id="exampleFormControlInput1" placeholder="Tela amarilla" readonly>
+            </div>
+            <div class="form-group">
+                <label for="exampleFormControlInput1">Descripcion</label>
+                <input type="text" name="descripcion" class="form-control" value="<%= data.descripcion %>" id="exampleFormControlInput1" placeholder="Escribe tu descripcion" readonly>
+            </div>
+            <div class="form-group">
+                <label for="exampleFormControlInput1">Precio</label>
+                <input type="number" name="precio" class="form-control" value="<%= data.precio %>" id="exampleFormControlInput1" placeholder="Tela amarilla" readonly>
+            </div>
+            <div class="form-group">
+                <label for="exampleFormControlInput1">Stock</label>
+                <input type="number" name="stock" class="form-control" value="<%= data.stock %>" id="exampleFormControlInput1" placeholder="Tela amarilla" readonly>
+            </div>
+            <p>
+                <% if(data.estado === false){ %>
+                    <p>No Disponible</p>
+                    <% }else{ %>
+
+                        <p>Disponible</p>
+
+                        <% } %>
+
+            </p>
+        </form>
+        <br/>
+        <br/>
+    </div>
+
+    <br/>
+    <a href="/producto/comentarios/<%= data._id  %>" class="btn btn-secondary">Ver Comentarios</a>
+    <a href="/productos" class="btn btn-primary">Volver</a>
+
+</body>
+
+</html>

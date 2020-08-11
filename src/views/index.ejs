@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>Hola</h1>
+    <% if(usuario) { %>
+        <a href="/profile">Perfil</a>
+        <a href="/logout">Salir</a>
+        <% } else { %>
+            <a href="/signin">Logearse</a>
+            <a href="/signup">Registrarse</a>
+            <% } %>
+
+</body>
+
+</html>

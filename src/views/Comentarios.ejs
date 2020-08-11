@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comentarios</title>
+</head>
+
+<body>
+    <form method="POST" action="/producto/comentarios/<%= data._id %>">
+        <label>Descripcion</label>
+        <input type="text" name="descripcion" />
+        <input type="submit" value="Comentar">
+    </form>
+</body>
+
+</html>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Productos</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+</head>
+
+<body>
+    <h1>Estas en productos</h1>
+    <a href="/addprod" class="btn btn-primary">+</a>
+    <form method="GET" action="/productos/buscar">
+        <input type="text" name="busqueda" placeholder="Buscar producto">
+        <input type="submit" value="Buscar" class="btn btn-primary">
+    </form>
+
+    <form>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">First</th>
+                    <th scope="col">Last</th>
+                    <th scope="col">Precio</th>
+                </tr>
+            </thead>
+
+
+            <tbody>
+                <% for(var i=0; i < data.length; i++) { %>
+                    <tr>
+                        <td>
+                            <%= i + 1%>
+                        </td>
+                        <td><strong><%= data[i].nombre %></strong></td>
+                        <td>
+                            <%= data[i].descripcion %>
+                        </td>
+                        <td>
+                            <%= data[i].precio %>
+                        </td>
+                        <td>
+                            <%= data[i]._id %>
+                        </td>
+                        <td>
+                            <a href="/producto/edit/<%= data[i]._id %>" class="btn btn-primary">Editar</a>
+                        </td>
+                        <td>
+                            <a href="/producto/detalles/<%= data[i]._id %>" class="btn btn-primary">Ver</a>
+                        </td>
+                        <td>
+                            <a href="/delprod/<%= data[i]._id %>" class="btn btn-danger">Eliminar</a>
+                        </td>
+                    </tr>
+                    <% } %>
+            </tbody>
+
+        </table>
+    </form>
+</body>
+
+</html>
