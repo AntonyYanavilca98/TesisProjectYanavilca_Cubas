@@ -52,8 +52,6 @@ router.get('/profile', isAuthenticated, (req, res, next) => {
     res.render('profile');
 });
 
-
-
 router.get('/logout', (req, res, next) => {
     req.logout();
     res.redirect('/');

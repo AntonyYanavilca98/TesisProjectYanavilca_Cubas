@@ -52,6 +52,7 @@ app.use((req, res, next) => {
 app.use('/', require('./routes/index'));
 app.use('/', require('./routes/productos'));
 app.use('/admin', require('./routes/adminauth'));
+app.use('/', require('./routes/file-upload'));
 
 // Conexion con el servidor
 

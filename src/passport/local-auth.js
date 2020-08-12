@@ -66,10 +66,10 @@ passport.use(new GoogleStrategy({
         if (usuarioverifica) {
             done(null, usuarioverifica);
         } else {
-            console.log(profile);
+            console.log("Este es el perfil", profile);
             const usuariogoogle = new Usuario();
-            usuariogoogle.nombres = profile.name.familyName;
-            usuariogoogle.apellidos = profile.name.givenName;
+            usuariogoogle.nombres = profile._json.name;
+            usuariogoogle.apellidos = profile._json.given_name;
             usuariogoogle.email = profile._json.email;
             usuariogoogle.password = ':)';
             usuariogoogle.image = profile._json.picture;

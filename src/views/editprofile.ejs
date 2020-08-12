@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <form method="POST" action="/editar/profile/<%= data._id %>" enctype="multipart/form-data">
+        <h1>Editando Perfil</h1>
+        <p>Nombres</p>
+        <input type="text" name="nombres" value="<%= data.nombres %>" placeholder="Introduce tu nombre" required>
+        <p>Apellidos</p>
+        <input type="text" name="apellidos" value="<%= data.apellidos %>" placeholder="Introduce tu nombre" required>
+        <p>Correo</p>
+        <input type="text" name="email" value="<%= data.email %>" placeholder="Introduce un correo" required>
+        <br/>
+        <% if( usuario.image === null ) { %>
+
+            <img src="/images/profile-default.png" width="400px" height="400px" />
+            <br/>
+            <input type="file" name="image" />
+            <% } else if ( usuario.image > 0 ){ %>
+                <img src="https://imageuploadcv.s3.us-east-2.amazonaws.com/<%= usuario.ruta %>" width="400px" height="400px" />
+                <br/>
+                <input type="file" name="image" />
+                <% } else { %>
+                    <img src="<%= usuario.image %>" width="400px" height="400px" />
+                    <br/>
+                    <input type="file" name="image" />
+                    <% } %>
+                        <br/>
+                        <input type="submit" value="Guardar" />
+
+    </form>
+    <a href="/productos">PRODUCTOS</a>
+
+    <a href="/profile">Volver</a>
+    <a href="/logout">Salir</a>
+</body>
+
+</html>

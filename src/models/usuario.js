@@ -10,12 +10,10 @@ let valoresValidos = {
 
 let usuarioSchema = new Schema({
     nombres: {
-        type: String,
-        required: true
+        type: String
     },
     apellidos: {
-        type: String,
-        required: true
+        type: String
     },
     role: {
         type: String,
