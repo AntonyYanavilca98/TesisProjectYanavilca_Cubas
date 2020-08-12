@@ -8,25 +8,37 @@
 </head>
 
 <body>
-    <h1>Bienvenido Perfil</h1>
-    <p>
-        <%= usuario._id %>
-    </p>
-    <p>
-        <%= usuario.nombres %>
-    </p>
-    <p>
-        <%= usuario.apellidos %>
-    </p>
-    <p>
-        <%= usuario.email %>
-    </p>
-    <a href="/productos">PRODUCTOS</a>
-    <% if( usuario.role == 'ADMIN_ROLE' ) { %>
-        <a href="/admin/admin_user">USUARIOS</a>
-        <% } %>
+    <form>
+        <h1>Bienvenido Perfil</h1>
+        <% if( usuario ) %>
+            <p>
+                <%= usuario._id %>
+            </p>
+            <p>
+                <%= usuario.nombres %>
+            </p>
+            <p>
+                <%= usuario.apellidos %>
+            </p>
+            <p>
+                <%= usuario.email %>
+            </p>
 
-            <a href="/logout">Salir</a>
+            <% if( usuario.image === null ) { %>
+
+                <img src="/images/profile-default.png" width="400px" height="400px" />
+
+                <% } else { %>
+                    <img src="<%= usuario.image %>" width="400px" height="400px" />
+                    <% } %>
+                        <br/>
+                        <a href="/productos">PRODUCTOS</a>
+                        <% if( usuario.role == 'ADMIN_ROLE' ) { %>
+                            <a href="/admin/admin_user">USUARIOS</a>
+                            <% } %>
+
+                                <a href="/logout">Salir</a>
+    </form>
 </body>
 
 </html>

@@ -27,6 +27,10 @@ let ProductoSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'Usuario'
     }],
+    CreateAt: {
+        type: Date,
+        default: Date.now()
+    },
     comentario: String,
     image: String
 });
