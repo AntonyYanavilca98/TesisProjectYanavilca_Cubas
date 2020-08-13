@@ -31,8 +31,8 @@ let ProductoSchema = new Schema({
         type: Date,
         default: Date.now()
     },
-    comentario: String,
-    image: String
+    image: String,
+    ruta: String,
 });
 
 

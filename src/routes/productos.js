@@ -2,7 +2,7 @@ const { isAuthenticated } = require('../authenticacion/authenticacion');
 const express = require('express');
 const Producto = require('../models/productos');
 const Comentario = require('../models/comentarios');
-const Usuario = require('../models/usuario');
+const upload = require('../service/file-upload');
 const router = express.Router();
 
 
@@ -35,15 +35,41 @@ router.get('/producto/edit/:id', isAuthenticated, async(req, res, next) => {
     res.render('productoedit', { data });
 });
 router.post('/producto/edit/:id', isAuthenticated, (req, res, next) => {
-    let id = req.params.id;
-    let body = req.body;
-    Producto.findById(id, (err, prodencontrado) => {
-        if (err) return console.log(err);
-        prodencontrado.nombre = body.nombre;
-        prodencontrado.descripcion = body.descripcion;
-        prodencontrado.save();
+    let singleUpload = upload.single('image');
+    singleUpload(req, res, (err) => {
+        if (err) return res.json({ ok: false, err });
+        let id = req.params.id;
+        let body = req.body;
+        Producto.findById(id, (err, prodencontrado) => {
+            if (err) return console.log(err);
+            let Files = req.file;
+            let filePath = req.file.key;
+
+            console.log('ESTE ES EL PATH:', Files);
+            let fileSplit = filePath.split('\.');
+
+
+            console.log("Este es el path", filePath);
+
+            console.log(fileSplit);
+
+            let fileName = fileSplit[0];
+
+            console.log('File name:', fileName);
+            prodencontrado.nombre = body.nombre;
+            prodencontrado.descripcion = body.descripcion;
+            prodencontrado.precio = body.precio;
+            prodencontrado.stock = body.stock;
+            prodencontrado.estado = body.estado;
+            prodencontrado.image = fileName;
+            prodencontrado.ruta = filePath;
+
+
+            prodencontrado.save();
+            res.redirect('/productos');
+        });
+
     });
-    res.redirect('/productos');
 });
 // --------------------------
 
@@ -59,6 +85,8 @@ router.post('/addproducto', isAuthenticated, async(req, res, next) => {
     console.log(body);
     let producto = new Producto(body);
     producto.usuario = req.user._id; // => Esta por defecto como user no como usuario
+    producto.image = null;
+    producto.ruta = null;
     await producto.save();
     console.log('Estos ', producto);
     res.redirect('/productos');

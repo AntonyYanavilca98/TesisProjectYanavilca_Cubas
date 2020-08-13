@@ -9,12 +9,40 @@
 </head>
 
 <body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="#">Navbar</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarColor02">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="/profile">Perfil</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/productos">Productos</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/misproductos">Mis Productos</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/Como_funciona">Como Funciona</a>
+                </li>
+            </ul>
+            <form method="GET" action="/productos/buscar" class="form-inline my-2 my-lg-0">
+                <a href="/addprod" class="btn btn-secondary mr-sm-2">Agregar Producto</a>
+                <input class="form-control mr-sm-2" type="text" name="busqueda" placeholder="Buscar">
+                <button class="btn btn-secondary my-2 my-sm-0" type="submit">Buscar</button>
+            </form>
+        </div>
+    </nav>
     <h1>Estas en productos</h1>
-    <a href="/addprod" class="btn btn-primary">+</a>
+    <!-- <a href="/addprod" class="btn btn-primary">+</a>
     <form method="GET" action="/productos/buscar">
         <input type="text" name="busqueda" placeholder="Buscar producto">
         <input type="submit" value="Buscar" class="btn btn-primary">
-    </form>
+    </form> -->
 
     <form>
         <table class="table">
