@@ -9,9 +9,29 @@
 
 <body>
     <form method="POST" action="/producto/comentarios/<%= data._id %>">
+        <label>Nombre</label>
+        <p>
+            <%= nombreUsuario %>
+        </p>
         <label>Descripcion</label>
         <input type="text" name="descripcion" />
+        <p>-----------------------------</p>
         <input type="submit" value="Comentar">
+    </form>
+    <form>
+
+        <% for (var i= 0; i < comment.length; i++){ %>
+            <% if ( id == comment[i].producto   ) { %>
+                <p>Nombre</p>
+                <p>
+                    <%= comment[i].usuario.nombres %>
+                </p>
+                <p>descripcion</p>
+                <%= comment[i].descripcion %>
+                    <br/> -----------------------
+                    <% } %>
+
+                        <% } %>
     </form>
 </body>
 

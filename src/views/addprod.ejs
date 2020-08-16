@@ -12,19 +12,19 @@
     <form action="/addproducto" method="POST">
         <div class="form-group">
             <label for="exampleFormControlInput1">Nombre</label>
-            <input type="text" name="nombre" class="form-control" id="exampleFormControlInput1" placeholder="Tela amarilla">
+            <input type="text" name="nombre" class="form-control" id="exampleFormControlInput1" placeholder="Tela amarilla" required>
         </div>
         <div class="form-group">
             <label for="exampleFormControlInput1">Descripcion</label>
-            <input type="text" name="descripcion" class="form-control" id="exampleFormControlInput1" placeholder="Escribe tu descripcion">
+            <input type="text" name="descripcion" class="form-control" id="exampleFormControlInput1" placeholder="Escribe tu descripcion" required>
         </div>
         <div class="form-group">
             <label for="exampleFormControlInput1">Precio</label>
-            <input type="number" name="precio" class="form-control" id="exampleFormControlInput1" placeholder="Tela amarilla">
+            <input type="number" name="precio" class="form-control" id="exampleFormControlInput1" placeholder="Tela amarilla" required>
         </div>
         <div class="form-group">
             <label for="exampleFormControlInput1">Stock</label>
-            <input type="number" name="stock" class="form-control" id="exampleFormControlInput1" placeholder="Tela amarilla">
+            <input type="number" name="stock" class="form-control" id="exampleFormControlInput1" placeholder="Tela amarilla" required>
         </div>
         <div class="form-check">
             <input name="estado" class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="true" checked>
@@ -38,8 +38,8 @@
               No disponible
             </label>
         </div>
-        <input type="submit" class="btn btn-primary" value="Guardar" />
-        <a href="/productos" class="btn btn-primary">Volver</a>
+        <input type="submit" class="btn btn-primary" value="Siguiente" />
+        <a href="/productos" class="btn btn-primary">Ir a Productos</a>
     </form>
 </body>
 

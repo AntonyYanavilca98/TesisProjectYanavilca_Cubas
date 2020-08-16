@@ -1,6 +1,7 @@
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
+// const FacebookStrategy = require('passport-facebook').Strategy;
 const bcrypt = require('bcrypt');
 const Usuario = require('../models/usuario');
 
@@ -42,7 +43,7 @@ passport.use('local-signin', new LocalStrategy({
 }, async(req, email, password, done) => {
     const usuario = await Usuario.findOne({ email: email })
     if (!usuario) {
-        return done(null, false, req.flash('signinMessage', 'El correo no existe'));
+        return done(null, false, req.flash('signinMessage', 'El correo o la contraseña no coinciden'));
     }
     if (!bcrypt.compareSync(password, usuario.password)) {
         return done(null, false, req.flash('signinMessage', 'La contraseña no coincide'));
@@ -57,12 +58,12 @@ passport.use('local-signin', new LocalStrategy({
 passport.use(new GoogleStrategy({
         clientID: '115698199407-72tmnaqeq9kdjssks80ilp2cslckmf9l.apps.googleusercontent.com',
         clientSecret: 'iAd3e0ho1rxCIDiPFRTTbI4E',
-        callbackURL: "https://tesisapp.herokuapp.com/google/callback",
-        proxy: true,
-        // callbackURL: "http://localhost:3000/google/callback",
+        // callbackURL: "https://tesisapp.herokuapp.com/google/callback",
+        // proxy: true,
+        callbackURL: "http://localhost:3000/google/callback",
     },
     async(accessToken, refreshToken, profile, done) => {
-        const usuarioverifica = await Usuario.findOne({ email: profile._json.email })
+        const usuarioverifica = await Usuario.findOne({ email: profile._json.email });
         if (usuarioverifica) {
             done(null, usuarioverifica);
         } else {
@@ -81,3 +82,32 @@ passport.use(new GoogleStrategy({
         }
     }
 ));
+
+
+//Facebook Authenticacion
+// passport.use(new FacebookStrategy({
+//         clientID: '3147079262075089',
+//         clientSecret: '561830cfc953e38fcde831f60c58f6a1',
+//         callbackURL: "http://localhost:3000/auth/facebook/callback",
+//         profileFields: ['id', 'emails', 'name', 'photos']
+//     },
+//     async(accessToken, refreshToken, profile, done) => {
+//         const fbverifica = await Usuario.findOne({ email: profile._json.email });
+//         if (fbverifica) {
+//             done(null, fbverifica);
+//         }
+//         console.log("perfil:", profile._json);
+//         let fotos = profile.photos[0].value;
+//         const usuariofacebook = new Usuario();
+//         usuariofacebook.nombres = profile._json.first_name;
+//         usuariofacebook.apellidos = profile._json.last_name;
+//         usuariofacebook.email = profile._json.email;
+//         usuariofacebook.image = fotos;
+//         usuariofacebook.ruta = fotos;
+//         await usuariofacebook.save();
+//         done(null, usuariofacebook);
+//         // console.log("fotos", fotos);
+//         console.log("datos:", usuariofacebook);
+//         // done(null, )
+//     }
+// ));

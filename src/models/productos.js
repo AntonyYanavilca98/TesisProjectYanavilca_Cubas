@@ -11,6 +11,20 @@ let ProductoSchema = new Schema({
         type: String,
         required: true
     },
+    color: {
+        type: String
+    },
+    talla: {
+        type: String
+    },
+    medida: {
+        de: {
+            type: Number
+        },
+        hasta: {
+            type: Number
+        },
+    },
     precio: {
         type: Number,
         required: true
@@ -23,10 +37,10 @@ let ProductoSchema = new Schema({
         type: Boolean,
         default: false
     },
-    usuario: [{
+    usuario: {
         type: Schema.Types.ObjectId,
         ref: 'Usuario'
-    }],
+    },
     CreateAt: {
         type: Date,
         default: Date.now()

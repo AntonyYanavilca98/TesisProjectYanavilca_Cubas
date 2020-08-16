@@ -8,14 +8,14 @@ let ComentarioSchema = new Schema({
         type: String,
         required: true
     },
-    usuario: [{
+    usuario: {
         type: Schema.Types.ObjectId,
         ref: 'Usuario'
-    }],
-    producto: [{
+    },
+    producto: {
         type: Schema.Types.ObjectId,
         ref: 'Producto'
-    }]
+    }
 });
 
 module.exports = mongoose.model('Comentario', ComentarioSchema);

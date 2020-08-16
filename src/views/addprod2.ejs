@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agregar producto</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+</head>
+
+<body>
+    <form action="/addprod2/<%= data._id %>" method="POST" enctype="multipart/form-data">
+        <div class="form-group">
+            <label for="exampleFormControlInput1">Color</label>
+            <input type="text" name="color" class="form-control" id="exampleFormControlInput1" placeholder="Color ..." required>
+        </div>
+        <div class="form-group">
+            <label for="exampleFormControlInput1">Medida</label>
+            <label for="exampleFormControlInput1">De</label>
+            <input type="number" name="de" class="form-control" id="exampleFormControlInput1" placeholder="De cuantos" required>
+            <label for="exampleFormControlInput1">Hasta</label>
+            <input type="number" name="hasta" class="form-control" id="exampleFormControlInput1" placeholder="Hasta" required>
+        </div>
+        <div class="form-group">
+            <label for="exampleFormControlInput1">Talla</label>
+            <input type="text" name="talla" class="form-control" id="exampleFormControlInput1" placeholder="X XL M S" required>
+        </div>
+        <% if( data.image === null ) { %>
+
+            <img src="data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%22318%22%20height%3D%22180%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20318%20180%22%20preserveAspectRatio%3D%22none%22%3E%3Cdefs%3E%3Cstyle%20type%3D%22text%2Fcss%22%3E%23holder_158bd1d28ef%20text%20%7B%20fill%3Argba(255%2C255%2C255%2C.75)%3Bfont-weight%3Anormal%3Bfont-family%3AHelvetica%2C%20monospace%3Bfont-size%3A16pt%20%7D%20%3C%2Fstyle%3E%3C%2Fdefs%3E%3Cg%20id%3D%22holder_158bd1d28ef%22%3E%3Crect%20width%3D%22318%22%20height%3D%22180%22%20fill%3D%22%23777%22%3E%3C%2Frect%3E%3Cg%3E%3Ctext%20x%3D%22129.359375%22%20y%3D%2297.35%22%3EImage%3C%2Ftext%3E%3C%2Fg%3E%3C%2Fg%3E%3C%2Fsvg%3E"
+                width="400px" height="400px" />
+            <br/>
+            <input type="file" name="image" required/>
+            <% } else { %>
+                <img src="https://imageuploadcv.s3.us-east-2.amazonaws.com/<%= data.ruta %>" width="400px" height="400px" />
+                <br/>
+                <input type="file" name="image" required/>
+                <% } %>
+                    <br/>
+                    <input type="submit" class="btn btn-primary" value="Guardar" />
+                    <a href="/addprod" class="btn btn-primary">Volver</a>
+    </form>
+</body>
+
+</html>

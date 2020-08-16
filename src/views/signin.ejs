@@ -61,33 +61,38 @@
                             <span class="focus-input100"></span>
                         </div>
 
-
-                        <div class="container-login100-form-btn">
-                            <div class="wrap-login100-form-btn">
-                                <div class="login100-form-bgbtn"></div>
-                                <button type="submit" class="login100-form-btn">
+                        <% if( signinMessage.length > 0 ) { %>
+                            <p class="label-input100" style="color: red;">
+                                <%= signinMessage  %>
+                            </p>
+                            <br/>
+                            <% }%>
+                                <div class="container-login100-form-btn">
+                                    <div class="wrap-login100-form-btn">
+                                        <div class="login100-form-bgbtn"></div>
+                                        <button type="submit" class="login100-form-btn">
 								Entrar
 							</button>
-                            </div>
+                                    </div>
 
 
-                            <a href="/signup" class="dis-block txt3 hov1 p-r-30 p-t-10 p-b-10 p-l-30">
+                                    <a href="/signup" class="dis-block txt3 hov1 p-r-30 p-t-10 p-b-10 p-l-30">
 							Registrate
 							<i class="fa fa-long-arrow-right m-l-5"></i>
                         </a>
-                            <br/>
-                            <br/>
-                            <br/>
-                            <br/>
-                            <div class="col s12 m6 offset-m3 center-align">
-                                <a class="oauth-container btn darken-4 white black-text" href="/google" style="text-transform:none">
-                                    <div class="left">
-                                        <img width="20px" style="margin-top:7px; margin-right:8px" alt="Google sign-in" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/512px-Google_%22G%22_Logo.svg.png" />
+                                    <br/>
+                                    <br/>
+                                    <br/>
+                                    <br/>
+                                    <div class="col s12 m6 offset-m3 center-align">
+                                        <a class="oauth-container btn darken-4 white black-text" href="/google" style="text-transform:none">
+                                            <div class="left">
+                                                <img width="20px" style="margin-top:7px; margin-right:8px" alt="Google sign-in" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/512px-Google_%22G%22_Logo.svg.png" />
+                                            </div>
+                                            Inicia Sesion con Google
+                                        </a>
                                     </div>
-                                    Inicia Sesion con Google
-                                </a>
-                            </div>
-                        </div>
+                                </div>
                     </form>
                 </div>
             </div>
@@ -113,6 +118,8 @@
     <script src="vendor/countdowntime/countdowntime.js"></script>
     <!--===============================================================================================-->
     <script src="js/main.js"></script>
+
+
 
 </body>
 

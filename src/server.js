@@ -11,10 +11,10 @@ const flash = require('connect-flash');
 // process.env.NODE_ENV = process.env.NODE_ENV || 'dev';
 // let URI;
 // if (process.env.NODE_ENV === 'dev') {
-// let URI = 'mongodb://localhost:27017/ProjectFinal';
+let URI = 'mongodb://localhost:27017/ProjectFinal';
 // } else {
-let URI = 'mongodb+srv://strider:jp1RbPtIuXDhbZda@cluster0.4opld.mongodb.net/Tesis?retryWrites=true&w=majority'
-    // }
+// let URI = 'mongodb+srv://strider:jp1RbPtIuXDhbZda@cluster0.4opld.mongodb.net/Tesis?retryWrites=true&w=majority'
+// }
 
 
 
@@ -44,10 +44,12 @@ app.use(passport.session());
 app.use((req, res, next) => {
     app.locals.signupMessage = req.flash('signupMessage')
     app.locals.signinMessage = req.flash('signinMessage')
+    app.locals.filePlease = req.flash('filePlease')
     app.locals.usuario = req.user;
     console.log(app.locals);
     next();
 });
+
 // Routes
 app.use('/', require('./routes/index'));
 app.use('/', require('./routes/productos'));

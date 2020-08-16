@@ -25,11 +25,11 @@
             <% } else if ( usuario.image > 0 ){ %>
                 <img src="https://imageuploadcv.s3.us-east-2.amazonaws.com/<%= usuario.ruta %>" width="400px" height="400px" />
                 <br/>
-                <input type="file" name="image" />
+                <input type="file" name="image" required/>
                 <% } else { %>
                     <img src="<%= usuario.image %>" width="400px" height="400px" />
                     <br/>
-                    <input type="file" name="image" />
+                    <input type="file" name="image" required/>
                     <% } %>
                         <br/>
                         <input type="submit" value="Guardar" />

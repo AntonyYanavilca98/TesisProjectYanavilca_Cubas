@@ -47,6 +47,16 @@ router.get('/google/callback',
 //     next();
 // });
 
+// router.get('/auth/facebook',
+//     passport.authenticate('facebook', { scope: ['email'] }));
+
+// router.get('/auth/facebook/callback',
+//     passport.authenticate('facebook', { successRedirect: '/profile', failureRedirect: '/signin' }),
+//     function(req, res) {
+//         // Successful authentication, redirect home.
+//         res.redirect('/');
+//     });
+
 
 router.get('/profile', isAuthenticated, (req, res, next) => {
     res.render('profile');
