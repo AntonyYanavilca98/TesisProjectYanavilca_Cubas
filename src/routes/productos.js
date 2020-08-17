@@ -2,6 +2,7 @@ const { isAuthenticated } = require('../authenticacion/authenticacion');
 const express = require('express');
 const Producto = require('../models/productos');
 const Comentario = require('../models/comentarios');
+const Usuario = require('../models/usuario');
 const upload = require('../service/file-upload');
 const router = express.Router();
 
@@ -225,8 +226,6 @@ router.get('/producto/detalles/:id', isAuthenticated, async(req, res, next) => {
     let userPost = JSON.stringify(data.usuario._id);
     let usuario = JSON.stringify(req.user._id);
     let Estesoy = req.user;
-
-
     let idUsuarioLogeado = req.user._id;
     let nombreUsuario = req.user.nombres;
     console.log("usuarios id:", userPost);

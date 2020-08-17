@@ -11,7 +11,7 @@
 
 <body>
     <div>
-        <% if( usuario == userPost ) { %>
+        <% if( Estesoy.role == 'ADMIN_ROLE' || usuario == userPost ) { %>
             <form action="/producto/edit/<%= data._id %>" method="POST" enctype="multipart/form-data">
                 <div class="form-group">
                     <label for="exampleFormControlInput1">Nombre</label>
@@ -95,7 +95,8 @@
     </div>
 
     <br/>
-    <% if( Estesoy.role == 'ADMIN_ROLE' ) { %>
+    <% if( Estesoy.role == 'ADMIN_ROLE' || usuario == userPost ) { %>
+
         <!-- Contenedor Principal -->
         <div class="comments-container">
             <h1>Comentarios</h1>
