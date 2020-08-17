@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Agregar producto</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link rel="stylesheet" href="/css/style.css">
 </head>
 
 <body>
@@ -94,8 +95,85 @@
     </div>
 
     <br/>
+    <% if( Estesoy.role == 'ADMIN_ROLE' ) { %>
+        <!-- Contenedor Principal -->
+        <div class="comments-container">
+            <h1>Comentarios</h1>
 
+            <form method="POST" action="/producto/detalles/<%= data._id %>">
+                <ul id="comments-list" class="comments-list">
+                    <li>
+                        <div class="comment-main-level">
+                            <!-- Avatar -->
+                            <% if( Estesoy.image === null ) { %>
+                                <div class="comment-avatar"><img src="/images/profile-default.png" alt=""></div>
+                                <% } else if ( Estesoy.image > 0 ){ %>
+                                    <div class="comment-avatar"><img src="https://imageuploadcv.s3.us-east-2.amazonaws.com/<%= Estesoy.ruta %>" alt=""></div>
+                                    <% } else { %>
+                                        <div class="comment-avatar"><img src="<%= Estesoy.image %>" alt=""></div>
+                                        <% } %>
+                                            <!-- Contenedor del Comentario -->
+                                            <div class="comment-box">
+                                                <div class="comment-head">
+                                                    <h6 class="comment-name by-author">
+                                                        <%= nombreUsuario %>
+                                                    </h6>
+                                                </div>
+                                                <div class="comment-content">
+                                                    <textarea name="descripcion" class="comment-content" cols="86" required></textarea>
+                                                    <button type="submit" class="btn btn-primary">Comentar</button>
+                                                </div>
+                                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </form>
+            <form>
+                <ul id="comments-list" class="comments-list">
+                    <li>
+                        <% for(var i=0; i < comment.length; i++ ){ %>
+                            <% if ( id == comment[i].producto   ) { %>
+                                <div class="comment-main-level">
+                                    <!-- Avatar -->
+                                    <% if( comment[i].usuario.image === null ) { %>
+                                        <div class="comment-avatar"><img src="/images/profile-default.png" alt=""></div>
+                                        <% } else if ( comment[i].usuario.image > 0 ){ %>
+                                            <div class="comment-avatar"><img src="https://imageuploadcv.s3.us-east-2.amazonaws.com/<%= comment[i].usuario.ruta %>" alt=""></div>
+                                            <br/>
+                                            <% } else { %>
+                                                <div class="comment-avatar"><img src="<%= comment[i].usuario.image %>" alt=""></div>
+                                                <% } %>
 
+                                                    <!-- Contenedor del Comentario -->
+                                                    <div class="comment-box">
+                                                        <div class="comment-head">
+                                                            <h6 class="comment-name by-author">
+                                                                <%= comment[i].usuario.nombres %>
+                                                            </h6>
+                                                            <span>Publicado el <%= comment[i].CreateAt %>           <%= comment[i].hora %></span>
+                                                            <i class="fa fa-reply"></i>
+                                                            <i class="fa fa-heart"></i>
+                                                        </div>
+                                                        <div class="comment-content">
+                                                            <%= comment[i].descripcion %>
+                                                                <% if(  usuario === JSON.stringify(comment[i].usuario._id)  ) { %>
+                                                                    <br/>
+                                                                    <br/>
+                                                                    <a href="/delcoment/<%= comment[i]._id %> " class="btn btn-primary">Eliminar</a>
+                                                                    <% } %>
+                                                        </div>
+
+                                                    </div>
+                                </div>
+                                <br/>
+                                <% } %>
+                                    <% } %>
+                    </li>
+                </ul>
+            </form>
+        </div>
+
+        <% } %>
 </body>
 
 </html>

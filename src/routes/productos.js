@@ -85,6 +85,11 @@ router.get('/addprod', isAuthenticated, (req, res, next) => {
 
 router.post('/addproducto', isAuthenticated, async(req, res, next) => {
     let body = req.body;
+    let date = new Date()
+
+    let day = date.getDate();
+    let month = date.getMonth() + 1;
+    let year = date.getFullYear();
     let producto = new Producto();
     producto.nombre = body.nombre;
     producto.descripcion = body.descripcion;
@@ -92,6 +97,11 @@ router.post('/addproducto', isAuthenticated, async(req, res, next) => {
     producto.precio = body.precio;
     producto.stock = body.stock;
     producto.estado = body.estado;
+    if (month < 10) {
+        producto.CreateAt = `${day}-0${month}-${year}`;
+    } else {
+        producto.CreateAt = `${day}-${month}-${year}`;
+    }
     producto.image = null;
     producto.ruta = null;
     producto.medida.de = null;
@@ -161,56 +171,112 @@ router.get('/delprod/:id', isAuthenticated, async(req, res, next) => {
 });
 
 
-// Ver Detalle y  (Editar) 
-router.get('/producto/detalles/:id', isAuthenticated, async(req, res, next) => {
-    let id = req.params.id;
-    let data = await Producto.findById(id)
-        .populate("usuario");
+// Ver Detalle y(Editar)
+// router.get('/producto/detalles/:id', isAuthenticated, async(req, res, next) => {
+//     let id = req.params.id;
+//     let data = await Producto.findById(id)
+//         .populate("usuario");
 
-    let userPost = JSON.stringify(data.usuario._id);
-    let usuario = JSON.stringify(req.user._id);
+//     let userPost = JSON.stringify(data.usuario._id);
+//     let usuario = JSON.stringify(req.user._id);
 
-    console.log("usuarios id:", userPost);
-    console.log("ID DE USUARIO", usuario);
-    console.log('Estos son los datos', data);
-    res.render('Detalles', { data, userPost, usuario });
-});
+//     console.log("usuarios id:", userPost);
+//     console.log("ID DE USUARIO", usuario);
+//     console.log('Estos son los datos', data);
+//     res.render('Detalles', { data, userPost, usuario });
+// });
+
+
 
 // Comentarios y Comentar
 
 
+// router.post('/producto/comentarios/:id', isAuthenticated, async(req, res, next) => {
+//     let body = req.body;
+//     let id = req.params.id;
+//     let saveComentario = new Comentario();
+//     saveComentario.descripcion = body.descripcion;
+//     saveComentario.usuario = req.user;
+//     saveComentario.producto = id;
+//     await saveComentario.save();
+//     res.redirect(`/producto/comentarios/${id}`);
+// });
 
-router.post('/producto/comentarios/:id', isAuthenticated, async(req, res, next) => {
+
+// router.get('/producto/comentarios/:id', isAuthenticated, async(req, res, next) => {
+//     let id = req.params.id;
+//     let data = await Producto.findById(id);
+//     let comment = await Comentario.find()
+//         .populate("usuario");
+//     let nombreUsuario = req.user.nombres;
+//     console.log("Nombre de Usuario:", nombreUsuario);
+//     res.render('Comentarios', { data, comment, id, nombreUsuario });
+// });
+
+
+// Mezla de Comentarios y Productos
+router.get('/producto/detalles/:id', isAuthenticated, async(req, res, next) => {
+    let id = req.params.id;
+    let data = await Producto.findById(id)
+        .populate("usuario");
+    let datos = await Producto.findById(id);
+    let comment = await Comentario.find()
+        .populate("usuario");
+    let userPost = JSON.stringify(data.usuario._id);
+    let usuario = JSON.stringify(req.user._id);
+    let Estesoy = req.user;
+
+
+    let idUsuarioLogeado = req.user._id;
+    let nombreUsuario = req.user.nombres;
+    console.log("usuarios id:", userPost);
+    console.log("ID DE USUARIO", Estesoy);
+    console.log('Estos son los datos', data);
+    res.render('Detalles', { datos, data, userPost, idUsuarioLogeado, usuario, Estesoy, comment, id, nombreUsuario });
+});
+
+
+router.post('/producto/detalles/:id', isAuthenticated, async(req, res, next) => {
+    let date = new Date()
+    let hours = date.getHours();
+    let minutes = date.getMinutes();
+    let ampm = hours >= 12 ? 'pm' : 'am';
+    hours = hours % 12;
+    hours = hours ? hours : 12; // the hour '0' should be '12'
+    minutes = minutes < 10 ? '0' + minutes : minutes;
+    let strTime = hours + ':' + minutes + ' ' + ampm;
+
+    let day = date.getDate();
+    let month = date.getMonth() + 1;
+    let year = date.getFullYear();
+
     let body = req.body;
     let id = req.params.id;
     let saveComentario = new Comentario();
     saveComentario.descripcion = body.descripcion;
     saveComentario.usuario = req.user;
+    if (month < 10) {
+        saveComentario.CreateAt = `${day}-0${month}-${year}`;
+    } else {
+        saveComentario.CreateAt = `${day}-${month}-${year}`;
+    }
+    saveComentario.hora = strTime;
     saveComentario.producto = id;
-    // let idComentario = saveComentario._id;
-    // Producto.findById(id, (err, comentarios) => {
-    //     if (err) return console.log(err);
-    //     comentarios.comentario = idComentario;
-    //     comentarios.save();
-    // });
-    // console.log("Id de comentario:", idComentario);
     await saveComentario.save();
-    res.redirect(`/producto/comentarios/${id}`);
+    res.redirect(`/producto/detalles/${id}`);
 });
 
-
-router.get('/producto/comentarios/:id', isAuthenticated, async(req, res, next) => {
+router.get('/delcoment/:id', isAuthenticated, async(req, res, next) => {
     let id = req.params.id;
-    let data = await Producto.findById(id);
-    let comment = await Comentario.find()
-        .populate("usuario");
-    let nombreUsuario = req.user.nombres;
-    console.log("Nombre de Usuario:", nombreUsuario);
-    res.render('Comentarios', { data, comment, id, nombreUsuario });
+    console.log("id de comentario:", id);
+    let comentario = await Comentario.findById(id)
+        .populate("producto", "_id");
+    let idProd = comentario.producto._id;
+    console.log("Comentarios buscar producto:", comentario);
+    // console.log("Id de producto", idProd);
+    await Comentario.remove({ _id: id });
+    res.redirect(`/producto/detalles/${idProd}`);
 });
-
-
-
 
 //  -------------------------
 

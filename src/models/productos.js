@@ -42,8 +42,7 @@ let ProductoSchema = new Schema({
         ref: 'Usuario'
     },
     CreateAt: {
-        type: Date,
-        default: Date.now()
+        type: String
     },
     image: String,
     ruta: String,

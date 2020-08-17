@@ -15,6 +15,12 @@ let ComentarioSchema = new Schema({
     producto: {
         type: Schema.Types.ObjectId,
         ref: 'Producto'
+    },
+    CreateAt: {
+        type: String
+    },
+    hora: {
+        type: String
     }
 });
 
