@@ -32,6 +32,7 @@ app.set('port', process.env.PORT || 3000);
 // middlewares
 app.use(morgan('dev'));
 app.use(express.urlencoded({ extended: false }));
+app.use(express.json());
 app.use(session({
     secret: 'mysecretsession',
     resave: false,
@@ -55,6 +56,7 @@ app.use('/', require('./routes/index'));
 app.use('/', require('./routes/productos'));
 app.use('/admin', require('./routes/adminauth'));
 app.use('/', require('./routes/file-upload'));
+app.use('/', require('./routes/ValidarContactos'));
 
 // Conexion con el servidor
 
