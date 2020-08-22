@@ -5,6 +5,8 @@ const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const bcrypt = require('bcrypt');
 const Usuario = require('../models/usuario');
 
+require('dotenv').config();
+
 passport.serializeUser((usuario, done) => {
     done(null, usuario.id);
 });
@@ -56,11 +58,11 @@ passport.use('local-signin', new LocalStrategy({
 
 // Google Authentication
 passport.use(new GoogleStrategy({
-        clientID: '115698199407-72tmnaqeq9kdjssks80ilp2cslckmf9l.apps.googleusercontent.com',
-        clientSecret: 'iAd3e0ho1rxCIDiPFRTTbI4E',
-        callbackURL: "https://tesisapp.herokuapp.com/google/callback",
+        clientID: process.env.googleclientID,
+        clientSecret: process.env.googleclientSecret,
+        callbackURL: process.env.googlecallbackURL,
         proxy: true,
-        // callbackURL: "http://localhost:3000/google/callback",
+        // callbackURL: process.env.googlecallbackURL_LOCAL,
     },
     async(accessToken, refreshToken, profile, done) => {
         const usuarioverifica = await Usuario.findOne({ email: profile._json.email });

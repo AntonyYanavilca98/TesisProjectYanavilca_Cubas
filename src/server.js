@@ -8,15 +8,6 @@ const session = require('express-session');
 const flash = require('connect-flash');
 require('dotenv').config();
 
-// process.env.NODE_ENV = process.env.NODE_ENV || 'dev';
-// let URI;
-// if (process.env.NODE_ENV === 'dev') {
-// let URI = 'mongodb://localhost:27017/ProjectFinal';
-// } else {
-// let URI = 'mongodb+srv://strider:jp1RbPtIuXDhbZda@cluster0.4opld.mongodb.net/Tesis?retryWrites=true&w=majority'
-// }
-
-
 
 const app = express();
 require('./passport/local-auth');

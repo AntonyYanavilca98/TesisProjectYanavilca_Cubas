@@ -16,8 +16,8 @@ aws.config.update({
 let upload = multer({
     storage: multerS3({
         s3: s3,
-        bucket: 'imageuploadcv',
-        acl: 'public-read',
+        bucket: process.env.awsbucket,
+        acl: process.env.awsacl,
         metadata: function(req, file, cb) {
             cb(null, { fieldName: file.fieldname });
         },
