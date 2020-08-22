@@ -6,15 +6,15 @@ const mongoose = require('mongoose');
 const passport = require('passport');
 const session = require('express-session');
 const flash = require('connect-flash');
-
+require('dotenv').config();
 
 // process.env.NODE_ENV = process.env.NODE_ENV || 'dev';
 // let URI;
 // if (process.env.NODE_ENV === 'dev') {
 // let URI = 'mongodb://localhost:27017/ProjectFinal';
 // } else {
-let URI = 'mongodb+srv://strider:jp1RbPtIuXDhbZda@cluster0.4opld.mongodb.net/Tesis?retryWrites=true&w=majority'
-    // }
+// let URI = 'mongodb+srv://strider:jp1RbPtIuXDhbZda@cluster0.4opld.mongodb.net/Tesis?retryWrites=true&w=majority'
+// }
 
 
 
@@ -60,7 +60,7 @@ app.use('/', require('./routes/ValidarContactos'));
 
 // Conexion con el servidor
 
-mongoose.connect(URI, { // Por si hay un error instalar npm i mongoose@5.2.8
+mongoose.connect(process.env.MONGO_URI, { // Por si hay un error instalar npm i mongoose@5.2.8
         useNewUrlParser: true,
         //useUnifiedTopology: true
     })

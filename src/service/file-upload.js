@@ -4,11 +4,12 @@ const multerS3 = require('multer-s3');
 
 const s3 = new aws.S3();
 
+require('dotenv').config();
 
 aws.config.update({
-    secretAccessKey: 'Hxvcfrup+D+uIHMnCVrjvSGFNwmYPpGmflHz+w7K', // AKIAJ6DIVLW64ZTMIWJQ
-    accessKeyId: 'AKIAJ6DIVLW64ZTMIWJQ', // Hxvcfrup+D+uIHMnCVrjvSGFNwmYPpGmflHz+w7K
-    region: 'us-east-2'
+    secretAccessKey: process.env.awssecretAccessKey,
+    accessKeyId: process.env.awsaccessKeyId,
+    region: process.env.awsregion
 });
 
 
