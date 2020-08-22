@@ -51,7 +51,7 @@ app.use('/', require('./routes/ValidarContactos'));
 
 // Conexion con el servidor
 
-mongoose.connect(process.env.MONGO_URI, { // Por si hay un error instalar npm i mongoose@5.2.8
+mongoose.connect(process.env.MONGO_LOCAL, { // Por si hay un error instalar npm i mongoose@5.2.8
         useNewUrlParser: true,
         //useUnifiedTopology: true
     })

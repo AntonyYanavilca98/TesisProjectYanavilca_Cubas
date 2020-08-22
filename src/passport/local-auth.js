@@ -60,9 +60,9 @@ passport.use('local-signin', new LocalStrategy({
 passport.use(new GoogleStrategy({
         clientID: process.env.googleclientID,
         clientSecret: process.env.googleclientSecret,
-        callbackURL: process.env.googlecallbackURL,
-        proxy: true,
-        // callbackURL: process.env.googlecallbackURL_LOCAL,
+        // callbackURL: process.env.googlecallbackURL,
+        // proxy: true,
+        callbackURL: process.env.googlecallbackURL_LOCAL,
     },
     async(accessToken, refreshToken, profile, done) => {
         const usuarioverifica = await Usuario.findOne({ email: profile._json.email });
