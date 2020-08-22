@@ -277,6 +277,28 @@ router.get('/delcoment/:id', isAuthenticated, async(req, res, next) => {
     res.redirect(`/producto/detalles/${idProd}`);
 });
 
+// Mis Productos
+
+router.get('/myproducts', isAuthenticated, async(req, res) => {
+
+    let productos = await Producto.find()
+        .populate("usuario", "_id");
+    let usuario = req.user._id;
+    // let idProd = productos[1].usuario._id;
+
+    let usuarioT = JSON.stringify(usuario);
+    // let idProdT = JSON.stringify(idProd);
+
+
+    // if (usuarioT === idProdT) {
+    //     console.log("Verdadeero");
+    // } else {
+    //     console.log("Falso");
+    // }
+
+    res.render('myproducts', { usuarioT, productos });
+});
+
 //  -------------------------
 
 module.exports = router;

@@ -58,9 +58,9 @@ passport.use('local-signin', new LocalStrategy({
 passport.use(new GoogleStrategy({
         clientID: '115698199407-72tmnaqeq9kdjssks80ilp2cslckmf9l.apps.googleusercontent.com',
         clientSecret: 'iAd3e0ho1rxCIDiPFRTTbI4E',
-        callbackURL: "https://tesisapp.herokuapp.com/google/callback",
-        proxy: true,
-        // callbackURL: "http://localhost:3000/google/callback",
+        // callbackURL: "https://tesisapp.herokuapp.com/google/callback",
+        // proxy: true,
+        callbackURL: "http://localhost:3000/google/callback",
     },
     async(accessToken, refreshToken, profile, done) => {
         const usuarioverifica = await Usuario.findOne({ email: profile._json.email });

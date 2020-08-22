@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mis productos</title>
+
+    <link rel="stylesheet" type="text/css" href="../css/bootwatch.css">
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="#">Navbar</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarColor02">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="/profile">Perfil</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/productos">Productos</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/myproducts">Mis Productos</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/Como_funciona">Como Funciona</a>
+                </li>
+            </ul>
+            <form method="GET" action="/productos/buscar" class="form-inline my-2 my-lg-0">
+                <a href="/addprod" class="btn btn-secondary mr-sm-2">Agregar Producto</a>
+                <input class="form-control mr-sm-2" type="text" name="busqueda" placeholder="Buscar">
+                <button class="btn btn-secondary my-2 my-sm-0" type="submit">Buscar</button>
+            </form>
+        </div>
+    </nav>
+    <br/>
+    <div class="album py-5 bg-light">
+        <div class="container">
+
+            <div class="row">
+                <% for(var i=0; i < productos.length; i++) { %>
+                    <% if( usuarioT == JSON.stringify(productos[i].usuario._id) ) { %>
+                        <div class="col-md-4">
+                            <div class="card mb-4 box-shadow">
+                                <% if( productos[i].image === null ) { %>
+                                    <img class="card-img-top" src="/images/no-image.png" style="height: 195px; width: 100%; display: block;" data-holder-rendered="true">
+                                    <% } else{ %>
+                                        <img class="card-img-top" src="https://imageuploadcv.s3.us-east-2.amazonaws.com/<%= productos[i].ruta %>" data-holder-rendered="true">
+                                        <% } %>
+
+                                            <div class="card-body">
+                                                <p class="card-text">
+                                                    <%= productos[i].nombre %>
+                                                </p>
+                                                <p class="card-text">
+                                                    <%= productos[i].descripcion %>
+                                                </p>
+                                                <div class="d-flex justify-content-between align-items-center">
+                                                    <div class="btn-group">
+                                                        <a href="/producto/detalles/<%= productos[i]._id %>" class="btn btn-sm btn-outline-secondary">Ver Detalles</a>
+                                                    </div>
+                                                    <small class="text-muted"><%= productos[i].CreateAt %></small>
+                                                </div>
+                                            </div>
+                            </div>
+                        </div>
+                        <% } %>
+                            <% } %>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
