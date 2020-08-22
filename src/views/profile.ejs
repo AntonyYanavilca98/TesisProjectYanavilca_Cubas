@@ -4,12 +4,46 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Perfil</title>
+    <link rel="stylesheet" type="text/css" href="../css/bootwatch.css">
 </head>
 
 <body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <a class="navbar-brand" href="/index.html">Lematex</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor02" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarColor02">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link">PERFIL <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/productos">PRODUCTOS</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/myproducts">MIS PRODUCTOS</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">COMO FUNCIONA</a>
+                </li>
+            </ul>
+            <form class="form-inline my-2 my-lg-0">
+                <% if( usuario.role == 'ADMIN_ROLE' ) { %>
+                    <a class="btn btn-primary my-2 my-sm-0" href="/admin/admin_user">USUARIOS</a>
+                    <% } %>
+                        <a class="btn btn-primary my-2 my-sm-0" href="/editar/profile/<%= usuario._id %>">EDITAR PERFIL</a>
+                        <a class="btn btn-primary my-2 my-sm-0" href="/logout">LOGOUT</a>
+
+            </form>
+        </div>
+    </nav>
     <form>
-        <h1>Bienvenido Perfil</h1>
+        <h1>Bienvenido
+            <%= usuario.nombres %>
+        </h1>
         <% if( usuario ) %>
             <p>
                 <%= usuario._id %>
@@ -33,14 +67,14 @@
                     <% } else { %>
                         <img src="<%= usuario.image %>" width="400px" height="400px" />
                         <% }  %>
-                            <br/>
+                            <!-- <br/>
                             <a href="/productos">PRODUCTOS</a>
                             <% if( usuario.role == 'ADMIN_ROLE' ) { %>
-                                <a href="/admin/admin_user">USUARIOS</a>
+                                <a class="btn btn-primary my-2 my-sm-0" href="/admin/admin_user">USUARIOS</a>
                                 <% } %>
 
                                     <a href="/editar/profile/<%= usuario._id %>">Editar</a>
-                                    <a href="/logout">Salir</a>
+                                    <a href="/logout">Salir</a> -->
     </form>
 </body>
 

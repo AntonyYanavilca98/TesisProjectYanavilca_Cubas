@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Administrar Usuarios</title>
+    <title>Resultados</title>
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="/css/sandstone.css" crossorigin="anonymous">
@@ -36,49 +36,58 @@
                 </li>
             </ul>
             <form class="form-inline my-2 my-lg-0" method="GET" action="/admin/buscar/usuario">
-                <input class="form-control mr-sm-2" name="busquedaU" type="text" placeholder="Buscar usuario...">
+                <input class="form-control mr-sm-2" name="busquedaU" type="text" placeholder="Buscar usuario..." required>
                 <button class="btn btn-secondary my-2 my-sm-0" type="submit"><span class="fa fa-search"></span></button>
             </form>
         </div>
     </nav>
+    <div class="album py-5 bg-light">
+        <div class="container">
 
-    <br/>
-    <form>
-        <div class="album py-5 bg-light">
-            <div class="container">
+            <div class="row">
+                <% if(usuarios) { %>
+                    <% for(var i=0; i < data.length; i++) { %>
 
-                <div class="row">
-                    <% for(var i = 0; i < data.length; i++) { %>
                         <div class="col-md-4">
                             <div class="card mb-4 box-shadow">
+
+
                                 <% if( data[i].image === null ) { %>
-                                    <img class="card-img-top" src="/images/no-image.png" data-holder-rendered="true">
+                                    <img class="card-img-top" src="/images/profile-default.png" style="height: 195px; width: 100%; display: block;" data-holder-rendered="true">
+
                                     <% } else if ( data[i].image > 0 ){ %>
-                                        <img class="card-img-top" src="https://imageuploadcv.s3.us-east-2.amazonaws.com/<%= data[i].ruta %>" width="400px" height="400px" />
-                                        <% }else {%>
+
+                                        <img class="card-img-top" src="https://imageuploadcv.s3.us-east-2.amazonaws.com/<%= data[i].ruta %>" data-holder-rendered="true" />
+
+                                        <% } else{ %>
                                             <img class="card-img-top" src="<%= data[i].image %>" data-holder-rendered="true">
                                             <% } %>
 
                                                 <div class="card-body">
                                                     <p class="card-text">
-                                                        <%= data[i].nombres  %>
+                                                        <%= data[i].nombres %>
                                                     </p>
                                                     <p class="card-text">
-                                                        <%= data[i].email %>
+                                                        <%= data[i].apellidos %>
                                                     </p>
-                                                    <a href="/admin/ver_perfil/<%= data[i]._id %>" class="btn btn-sm btn-outline-danger">Ver Perfil</a>
-                                                    <a href="/admin/eliminar/<%= data[i]._id %>" class=" btn btn-sm btn-outline-danger ">Eliminar</a>
-
+                                                    <div class="d-flex justify-content-between align-items-center">
+                                                        <div class="btn-group">
+                                                            <a href="/producto/detalles/<%= data[i]._id %>" class="btn btn-sm btn-outline-secondary">Ver Detalles</a>
+                                                        </div>
+                                                        <small class="text-muted"><%= data[i].CreateAt %></small>
+                                                    </div>
                                                 </div>
                             </div>
                         </div>
                         <% } %>
-                </div>
+
+                            <% } else { %>
+                                <h1>Sin resultados</h1>
+
+                                <% }  %>
             </div>
         </div>
-
-    </form>
+    </div>
 </body>
-
 
 </html>

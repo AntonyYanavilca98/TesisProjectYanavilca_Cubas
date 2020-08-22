@@ -299,6 +299,19 @@ router.get('/myproducts', isAuthenticated, async(req, res) => {
     res.render('myproducts', { usuarioT, productos });
 });
 
+
+router.get('/myproducts/buscar', isAuthenticated, async(req, res) => {
+
+    let resp = req.query.busquedaM;
+    let regex = new RegExp(resp, 'i');
+    let data = await Producto.find({ nombre: regex })
+        .populate("usuario", "_id");
+    let usuario = req.user._id;
+    let usuarioT = JSON.stringify(usuario);
+    console.log(data);
+    res.render('buscarMyProducts', { data, usuarioT });
+});
+
 //  -------------------------
 
 module.exports = router;
