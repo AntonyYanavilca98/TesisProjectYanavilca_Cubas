@@ -1,44 +1,113 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <title>Editando Perfil</title>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
 </head>
 
 <body>
+
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <a class="navbar-brand" href="/index.html">Lematex</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor02" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarColor02">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="/profile">PERFIL</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/productos">PRODUCTOS <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/myproducts">MIS PRODUCTOS</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">COMO FUNCIONA</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      OPCIONES
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="/editar/profile/<%= usuario._id %>">EDITAR PERFIL</a>
+                        <a class="dropdown-item" href="/logout">LOGOUT</a>
+                        <div class="dropdown-divider"></div>
+                        <% if( usuario.role == 'ADMIN_ROLE' ) { %>
+                            <a class="dropdown-item" href="/admin/admin_user">USUARIOS</a>
+                            <% } %>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+
+
     <form method="POST" action="/editar/profile/<%= data._id %>" enctype="multipart/form-data">
-        <h1>Editando Perfil</h1>
-        <p>Nombres</p>
-        <input type="text" name="nombres" value="<%= data.nombres %>" placeholder="Introduce tu nombre" required>
-        <p>Apellidos</p>
-        <input type="text" name="apellidos" value="<%= data.apellidos %>" placeholder="Introduce tu nombre" required>
-        <p>Correo</p>
-        <input type="text" name="email" value="<%= data.email %>" placeholder="Introduce un correo" required>
-        <br/>
-        <% if( usuario.image === null ) { %>
 
-            <img src="/images/profile-default.png" width="400px" height="400px" />
+
+        <div class="container bg-light">
+
+            <div class="row">
+                <h1 class="display-1">
+                    Editando Perfil
+                </h1>
+            </div>
             <br/>
-            <input type="file" name="image" />
-            <% } else if ( usuario.image > 0 ){ %>
-                <img src="https://imageuploadcv.s3.us-east-2.amazonaws.com/<%= usuario.ruta %>" width="400px" height="400px" />
-                <br/>
-                <input type="file" name="image" required/>
-                <% } else { %>
-                    <img src="<%= usuario.image %>" width="400px" height="400px" />
-                    <br/>
-                    <input type="file" name="image" required/>
-                    <% } %>
+
+            <div class="container bg-transparent">
+                <div class="row">
+                    <div class="col">
+                        <label for="exampleFormControlInput1">Nombres</label>
+                        <input type="text" class="form-control" aria-label="Small" id="exampleFormControlInput1" aria-describedby="inputGroup-sizing-sm" name="nombres" value="<%= data.nombres %>" placeholder="Introduce tu nombre" required>
+                        <label for="exampleFormControlInput1">Apellidos</label>
+                        <input type="text" class="form-control" aria-label="Small" id="exampleFormControlInput1" aria-describedby="inputGroup-sizing-sm" name="apellidos" value="<%= data.apellidos %>" id="exampleFormControlInput1" placeholder="Introduce tus Apellidos" required>
+                        <label for="exampleFormControlInput1">Correo</label>
+                        <input type="text" class="form-control" aria-label="Small" id="exampleFormControlInput1" aria-describedby="inputGroup-sizing-sm" name="email" value="<%= data.email %>" placeholder="Introduce un correo" required>
+                        <label for="exampleFormControlInput1">Cambiar Contraseña</label>
+                        <input type="password" class="form-control" aria-label="Small" id="exampleFormControlInput1" aria-describedby="inputGroup-sizing-sm" name="password" placeholder="***********" required>
                         <br/>
-                        <input type="submit" value="Guardar" />
+                        <input type="submit" class="btn btn-success w-100" value="Guardar" />
+                        <a class="btn btn-danger w-100" href="/profile">Volver</a>
+                    </div>
 
+                    <div class="col-5">
+
+                        <% if( usuario.image === null ) { %>
+
+                            <img src="/images/profile-default.png" width="400px" height="380px" />
+                            <br/>
+                            <% } else if ( usuario.image > 0 ){ %>
+                                <img src="https://imageuploadcv.s3.us-east-2.amazonaws.com/<%= usuario.ruta %>" width="400px" height="380px" />
+                                <br/>
+                                <% } else { %>
+                                    <img src="<%= usuario.image %>" width="400px" height="380px" />
+                                    <br/>
+                                    <% } %>
+                                        <input type="file" name="image" required/>
+
+                                        <br/>
+
+                    </div>
+                </div>
+            </div>
+        </div>
     </form>
-    <a href="/productos">PRODUCTOS</a>
 
-    <a href="/profile">Volver</a>
-    <a href="/logout">Salir</a>
+    </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 </body>
 
 </html>

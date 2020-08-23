@@ -5,58 +5,80 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Administrar Usuarios</title>
-    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="/css/sandstone.css" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="/css/font-awesome.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 </head>
 
-<body>
+<body class="bg-transparent">
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-        <a class="navbar-brand">Lematex</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+        <a class="navbar-brand" href="/index.html">Lematex</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor02" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
 
-        <div class="collapse navbar-collapse" id="navbarColor01">
+        <div class="collapse navbar-collapse" id="navbarColor02">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item ">
-                    <a class="nav-link" href="/profile">MI PERFIL</a>
+                    <a class="nav-link" href="/profile">PERFIL </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/productos">PRODUCTOS</a>
                 </li>
-                <li class="nav-item active">
-                    <a class="nav-link">USUARIOS <span class="sr-only">(current)</span></a>
+                <li class="nav-item">
+                    <a class="nav-link" href="/myproducts">MIS PRODUCTOS</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Pricing</a>
+                    <a class="nav-link" href="#">COMO FUNCIONA</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">About</a>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      OPCIONES
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="/editar/profile/<%= usuario._id %>">EDITAR PERFIL</a>
+                        <a class="dropdown-item" href="/logout">LOGOUT</a>
+                        <div class="dropdown-divider"></div>
+                        <% if( usuario.role == 'ADMIN_ROLE' ) { %>
+                            <a class="dropdown-item active" href="/admin/admin_user">USUARIOS <span class="sr-only">(current)</span></a>
+                            <% } %>
+
+                    </div>
                 </li>
             </ul>
-            <form class="form-inline my-2 my-lg-0" method="GET" action="/admin/buscar/usuario">
-                <input class="form-control mr-sm-2" name="busquedaU" type="text" placeholder="Buscar usuario...">
-                <button class="btn btn-secondary my-2 my-sm-0" type="submit"><span class="fa fa-search"></span></button>
-            </form>
         </div>
     </nav>
 
     <br/>
-    <form>
-        <div class="album py-5 bg-light">
-            <div class="container">
+
+    <div class="container bg-light">
+        <div class="row">
+            <div class="col">
+                <form class="form-inline my-2 my-lg-0" method="GET" action="/admin/buscar/usuario">
+                    <input class="form-control col-11" type="search" name="busquedaU" placeholder="Buscar usuario..." aria-label="Search">
+
+                    <button class="btn btn-secondary my-2 my-sm-0 col-1" type="submit"><span class="fa fa-search"></span></button>
+                </form>
+            </div>
+        </div>
+
+    </div>
+
+    <form class="container bg-light">
+        <div class="container">
+            <div class="album py-5 bg-light">
+
 
                 <div class="row">
                     <% for(var i = 0; i < data.length; i++) { %>
                         <div class="col-md-4">
                             <div class="card mb-4 box-shadow">
                                 <% if( data[i].image === null ) { %>
-                                    <img class="card-img-top" src="/images/no-image.png" data-holder-rendered="true">
+                                    <img class="card-img-top" src="/images/no-image.png" data-holder-rendered="true" style="height: 195px; width: 100%; display: block;">
                                     <% } else if ( data[i].image > 0 ){ %>
-                                        <img class="card-img-top" src="https://imageuploadcv.s3.us-east-2.amazonaws.com/<%= data[i].ruta %>" width="400px" height="400px" />
+                                        <img class="card-img-top" src="https://imageuploadcv.s3.us-east-2.amazonaws.com/<%= data[i].ruta %>" data-holder-rendered="true" style="height: 195px; width: 100%; display: block;" />
                                         <% }else {%>
-                                            <img class="card-img-top" src="<%= data[i].image %>" data-holder-rendered="true">
+                                            <img class="card-img-top" src="<%= data[i].image %>" data-holder-rendered="true" style="height: 195px; width: 100%; display: block;" />
                                             <% } %>
 
                                                 <div class="card-body">
@@ -78,6 +100,9 @@
         </div>
 
     </form>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
 </body>
 
 

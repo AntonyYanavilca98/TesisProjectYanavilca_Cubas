@@ -5,14 +5,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Perfil</title>
-    <link rel="stylesheet" type="text/css" href="../css/bootwatch.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
 </head>
 
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
         <a class="navbar-brand" href="/index.html">Lematex</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor02" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
+          <yspan class="navbar-toggler-icon"></yspan>
         </button>
 
         <div class="collapse navbar-collapse" id="navbarColor02">
@@ -29,45 +30,64 @@
                 <li class="nav-item">
                     <a class="nav-link" href="#">COMO FUNCIONA</a>
                 </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      OPCIONES
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="/editar/profile/<%= usuario._id %>">EDITAR PERFIL</a>
+                        <a class="dropdown-item" href="/logout">LOGOUT</a>
+                        <div class="dropdown-divider"></div>
+                        <% if( usuario.role == 'ADMIN_ROLE' ) { %>
+                            <a class="dropdown-item" href="/admin/admin_user">USUARIOS</a>
+                            <% } %>
+                    </div>
+                </li>
             </ul>
-            <form class="form-inline my-2 my-lg-0">
-                <% if( usuario.role == 'ADMIN_ROLE' ) { %>
-                    <a class="btn btn-primary my-2 my-sm-0" href="/admin/admin_user">USUARIOS</a>
-                    <% } %>
-                        <a class="btn btn-primary my-2 my-sm-0" href="/editar/profile/<%= usuario._id %>">EDITAR PERFIL</a>
-                        <a class="btn btn-primary my-2 my-sm-0" href="/logout">LOGOUT</a>
-
-            </form>
         </div>
     </nav>
     <form>
-        <h1>Bienvenido
-            <%= usuario.nombres %>
-        </h1>
-        <% if( usuario ) %>
-            <p>
-                <%= usuario._id %>
-            </p>
-            <p>
-                <%= usuario.nombres %>
-            </p>
-            <p>
-                <%= usuario.apellidos %>
-            </p>
-            <p>
-                <%= usuario.email %>
-            </p>
+        <div class="container">
+            <div class="row">
+                <h1 class="display-1">Bienvenido
+                    <%= usuario.nombres %>
+                </h1>
+            </div>
+            <br/>
 
-            <% if( usuario.image === null ) { %>
+            <div class="container bg-light">
+                <div class="row">
 
-                <img src="/images/profile-default.png" width="400px" height="400px" />
+                    <% if( usuario ) %>
+                        <div class="col">
+                            <div class="float-left">
+                                <h6>
+                                    <%= usuario._id %>
+                                </h6>
+                                <h6>
+                                    <%= usuario.nombres %>
+                                </h6>
+                                <h6>
+                                    <%= usuario.apellidos %>
+                                </h6>
+                                <h6>
+                                    <%= usuario.email %>
+                                </h6>
 
-                <% } else if ( usuario.image > 0 ){ %>
-                    <img src="https://imageuploadcv.s3.us-east-2.amazonaws.com/<%= usuario.ruta %>" width="400px" height="400px" />
-                    <% } else { %>
-                        <img src="<%= usuario.image %>" width="400px" height="400px" />
-                        <% }  %>
-                            <!-- <br/>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="float-right">
+                                <% if( usuario.image === null ) { %>
+
+                                    <img src="/images/profile-default.png" width="400px" height="380px" />
+
+                                    <% } else if ( usuario.image > 0 ){ %>
+                                        <img src="https://imageuploadcv.s3.us-east-2.amazonaws.com/<%= usuario.ruta %>" width="400px" height="380px" />
+                                        <% } else { %>
+                                            <img src="<%= usuario.image %>" width="400px" height="380px" />
+                                            <% }  %>
+                                                <!-- <br/>
                             <a href="/productos">PRODUCTOS</a>
                             <% if( usuario.role == 'ADMIN_ROLE' ) { %>
                                 <a class="btn btn-primary my-2 my-sm-0" href="/admin/admin_user">USUARIOS</a>
@@ -75,7 +95,18 @@
 
                                     <a href="/editar/profile/<%= usuario._id %>">Editar</a>
                                     <a href="/logout">Salir</a> -->
+
+                            </div>
+                        </div>
+                </div>
+            </div>
+        </div>
     </form>
+
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 </body>
 
 </html>

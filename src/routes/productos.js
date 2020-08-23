@@ -64,6 +64,7 @@ router.post('/producto/edit/:id', isAuthenticated, (req, res, next) => {
             prodencontrado.descripcion = body.descripcion;
             prodencontrado.precio = body.precio;
             prodencontrado.stock = body.stock;
+            prodencontrado.talla = body.talla;
             prodencontrado.estado = body.estado;
             prodencontrado.image = fileName;
             prodencontrado.ruta = filePath;
@@ -224,6 +225,7 @@ router.get('/producto/detalles/:id', isAuthenticated, async(req, res, next) => {
     let comment = await Comentario.find()
         .populate("usuario");
     let userPost = JSON.stringify(data.usuario._id);
+    let namePost = data.usuario.nombres;
     let usuario = JSON.stringify(req.user._id);
     let Estesoy = req.user;
     let idUsuarioLogeado = req.user._id;
@@ -231,7 +233,7 @@ router.get('/producto/detalles/:id', isAuthenticated, async(req, res, next) => {
     console.log("usuarios id:", userPost);
     console.log("ID DE USUARIO", Estesoy);
     console.log('Estos son los datos', data);
-    res.render('Detalles', { datos, data, userPost, idUsuarioLogeado, usuario, Estesoy, comment, id, nombreUsuario });
+    res.render('Detalles', { datos, data, userPost, idUsuarioLogeado, usuario, namePost, Estesoy, comment, id, nombreUsuario });
 });
 
 

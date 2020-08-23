@@ -7,173 +7,379 @@
     <title>Agregar producto</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
     <link rel="stylesheet" href="/css/style.css">
+    <style type="text/css">
+        body {
+            font-family: Arial;
+            font-size: 10pt;
+        }
+        
+        #dvPreview {
+            filter: progid: DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod=image);
+            min-height: 400px;
+            min-width: 400px;
+            display: none;
+        }
+    </style>
 </head>
 
 <body>
-    <div>
-        <% if( Estesoy.role == 'ADMIN_ROLE' || usuario == userPost ) { %>
-            <form action="/producto/edit/<%= data._id %>" method="POST" enctype="multipart/form-data">
-                <div class="form-group">
-                    <label for="exampleFormControlInput1">Nombre</label>
-                    <input type="text" name="nombre" class="form-control" value="<%= data.nombre %>" id="exampleFormControlInput1" placeholder="Tela amarilla" required>
-                </div>
-                <div class="form-group">
-                    <label for="exampleFormControlInput1">Descripcion</label>
-                    <input type="text" name="descripcion" class="form-control" value="<%= data.descripcion %>" id="exampleFormControlInput1" placeholder="Escribe tu descripcion" required>
-                </div>
-                <div class="form-group">
-                    <label for="exampleFormControlInput1">Precio</label>
-                    <input type="number" name="precio" class="form-control" value="<%= data.precio %>" id="exampleFormControlInput1" placeholder="Tela amarilla" required>
-                </div>
-                <div class="form-group">
-                    <label for="exampleFormControlInput1">Stock</label>
-                    <input type="number" name="stock" class="form-control" value="<%= data.stock %>" id="exampleFormControlInput1" placeholder="Tela amarilla" required>
-                </div>
-                <div class="form-check">
-                    <input name="estado" class="form-check-input" type="radio" value="<%= data.estado %>" name="exampleRadios" id="exampleRadios1" value="true" checked>
-                    <label class="form-check-label" for="exampleRadios1">
-                      Disponible
-                    </label>
-                </div>
-                <div class="form-check">
-                    <input name="estado" class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="false">
-                    <label class="form-check-label" for="exampleRadios2">
-                      No disponible
-                    </label>
-                </div>
-                <% if( data.image === null ) { %>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <a class="navbar-brand" href="/index.html">Lematex</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor02" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
 
-                    <img src="data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%22318%22%20height%3D%22180%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20318%20180%22%20preserveAspectRatio%3D%22none%22%3E%3Cdefs%3E%3Cstyle%20type%3D%22text%2Fcss%22%3E%23holder_158bd1d28ef%20text%20%7B%20fill%3Argba(255%2C255%2C255%2C.75)%3Bfont-weight%3Anormal%3Bfont-family%3AHelvetica%2C%20monospace%3Bfont-size%3A16pt%20%7D%20%3C%2Fstyle%3E%3C%2Fdefs%3E%3Cg%20id%3D%22holder_158bd1d28ef%22%3E%3Crect%20width%3D%22318%22%20height%3D%22180%22%20fill%3D%22%23777%22%3E%3C%2Frect%3E%3Cg%3E%3Ctext%20x%3D%22129.359375%22%20y%3D%2297.35%22%3EImage%3C%2Ftext%3E%3C%2Fg%3E%3C%2Fg%3E%3C%2Fsvg%3E"
-                        width="400px" height="400px" />
-                    <br/>
-                    <input type="file" name="image" required/>
-                    <% } else { %>
-                        <img src="https://imageuploadcv.s3.us-east-2.amazonaws.com/<%= data.ruta %>" width="400px" height="400px" />
-                        <br/>
-                        <input type="file" name="image" required/>
-                        <% } %>
-                            <br/>
-                            <input type="submit" class="btn btn-primary" value="Modificar" />
-                            <a href="/delprod/<%= data._id %> " class="btn btn-primary">Eliminar</a>
-                            <a href="/productos" class="btn btn-primary">Volver</a>
-            </form>
-            <% } else { %>
-                <form>
-                    <div class="form-group">
-                        <label for="exampleFormControlInput1">Nombre</label>
-                        <input type="text" name="nombre" class="form-control" value="<%= data.nombre %>" id="exampleFormControlInput1" placeholder="Tela amarilla" readonly>
+        <div class="collapse navbar-collapse" id="navbarColor02">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="/profile">PERFIL</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="/productos">PRODUCTOS <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/myproducts">MIS PRODUCTOS</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">COMO FUNCIONA</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      OPCIONES
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="/editar/profile/<%= Estesoy._id %>">EDITAR PERFIL</a>
+                        <a class="dropdown-item" href="/logout">LOGOUT</a>
+                        <div class="dropdown-divider"></div>
+                        <% if( usuario.role == 'ADMIN_ROLE' ) { %>
+                            <a class="dropdown-item" href="/admin/admin_user">USUARIOS</a>
+                            <% } %>
                     </div>
-                    <div class="form-group">
-                        <label for="exampleFormControlInput1">Descripcion</label>
-                        <input type="text" name="descripcion" class="form-control" value="<%= data.descripcion %>" id="exampleFormControlInput1" placeholder="Escribe tu descripcion" readonly>
-                    </div>
-                    <div class="form-group">
-                        <label for="exampleFormControlInput1">Precio</label>
-                        <input type="number" name="precio" class="form-control" value="<%= data.precio %>" id="exampleFormControlInput1" placeholder="Tela amarilla" readonly>
-                    </div>
-                    <div class="form-group">
-                        <label for="exampleFormControlInput1">Stock</label>
-                        <input type="number" name="stock" class="form-control" value="<%= data.stock %>" id="exampleFormControlInput1" placeholder="Tela amarilla" readonly>
-                    </div>
-                    <p>
-                        <% if(data.estado === false){ %>
-                            <p>No Disponible</p>
-                            <% }else{ %>
+                </li>
+            </ul>
+        </div>
+    </nav>
 
-                                <p>Disponible</p>
 
-                                <% } %>
-
-                    </p>
-                    <a href="/productos" class="btn btn-primary">Volver</a>
-                </form>
-                <%  } %>
-
-                    <br/>
-                    <br/>
-    </div>
-
-    <br/>
+    <!-- nuevo formulario -->
     <% if( Estesoy.role == 'ADMIN_ROLE' || usuario == userPost ) { %>
 
-        <!-- Contenedor Principal -->
-        <div class="comments-container">
-            <h1>Comentarios</h1>
+        <div class="containter bg-dark">
 
-            <form method="POST" action="/producto/detalles/<%= data._id %>">
-                <ul id="comments-list" class="comments-list">
-                    <li>
-                        <div class="comment-main-level">
-                            <!-- Avatar -->
-                            <% if( Estesoy.image === null ) { %>
-                                <div class="comment-avatar"><img src="/images/profile-default.png" alt=""></div>
-                                <% } else if ( Estesoy.image > 0 ){ %>
-                                    <div class="comment-avatar"><img src="https://imageuploadcv.s3.us-east-2.amazonaws.com/<%= Estesoy.ruta %>" alt=""></div>
-                                    <% } else { %>
-                                        <div class="comment-avatar"><img src="<%= Estesoy.image %>" alt=""></div>
-                                        <% } %>
-                                            <!-- Contenedor del Comentario -->
-                                            <div class="comment-box">
-                                                <div class="comment-head">
-                                                    <h6 class="comment-name by-author">
-                                                        <%= nombreUsuario %>
-                                                    </h6>
-                                                </div>
-                                                <div class="comment-content">
-                                                    <textarea name="descripcion" class="comment-content" cols="86" required></textarea>
-                                                    <button type="submit" class="btn btn-primary">Comentar</button>
+            <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+
+
+
+                        <div class="container mt-5 mb-5">
+                            <div class="row d-flex justify-content-center">
+                                <div class="col-md-10">
+                                    <div class="card">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="images p-3">
+                                                    <div class="text-center p-4">
+                                                        <% if( data.image === null ) { %>
+                                                            <img id="main-image" src="data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%22318%22%20height%3D%22180%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20318%20180%22%20preserveAspectRatio%3D%22none%22%3E%3Cdefs%3E%3Cstyle%20type%3D%22text%2Fcss%22%3E%23holder_158bd1d28ef%20text%20%7B%20fill%3Argba(255%2C255%2C255%2C.75)%3Bfont-weight%3Anormal%3Bfont-family%3AHelvetica%2C%20monospace%3Bfont-size%3A16pt%20%7D%20%3C%2Fstyle%3E%3C%2Fdefs%3E%3Cg%20id%3D%22holder_158bd1d28ef%22%3E%3Crect%20width%3D%22318%22%20height%3D%22180%22%20fill%3D%22%23777%22%3E%3C%2Frect%3E%3Cg%3E%3Ctext%20x%3D%22129.359375%22%20y%3D%2297.35%22%3EImage%3C%2Ftext%3E%3C%2Fg%3E%3C%2Fg%3E%3C%2Fsvg%3E"
+                                                                width="250" />
+                                                            <% } else { %>
+                                                                <img id="main-image" src="https://imageuploadcv.s3.us-east-2.amazonaws.com/<%= data.ruta %>" width="350px" height="350px" />
+
+                                                                <% } %>
+                                                    </div>
+
                                                 </div>
                                             </div>
-                        </div>
-                    </li>
-                </ul>
-            </form>
-            <form>
-                <ul id="comments-list" class="comments-list">
-                    <li>
-                        <% for(var i=0; i < comment.length; i++ ){ %>
-                            <% if ( id == comment[i].producto   ) { %>
-                                <div class="comment-main-level">
-                                    <!-- Avatar -->
-                                    <% if( comment[i].usuario.image === null ) { %>
-                                        <div class="comment-avatar"><img src="/images/profile-default.png" alt=""></div>
-                                        <% } else if ( comment[i].usuario.image > 0 ){ %>
-                                            <div class="comment-avatar"><img src="https://imageuploadcv.s3.us-east-2.amazonaws.com/<%= comment[i].usuario.ruta %>" alt=""></div>
-                                            <br/>
-                                            <% } else { %>
-                                                <div class="comment-avatar"><img src="<%= comment[i].usuario.image %>" alt=""></div>
-                                                <% } %>
-
-                                                    <!-- Contenedor del Comentario -->
-                                                    <div class="comment-box">
-                                                        <div class="comment-head">
-                                                            <h6 class="comment-name by-author">
-                                                                <%= comment[i].usuario.nombres %>
-                                                            </h6>
-                                                            <span>Publicado el <%= comment[i].CreateAt %>           <%= comment[i].hora %></span>
-                                                            <i class="fa fa-reply"></i>
-                                                            <i class="fa fa-heart"></i>
-                                                        </div>
-                                                        <div class="comment-content">
-                                                            <%= comment[i].descripcion %>
-                                                                <% if(  usuario === JSON.stringify(comment[i].usuario._id)  ) { %>
-                                                                    <br/>
-                                                                    <br/>
-                                                                    <a href="/delcoment/<%= comment[i]._id %> " class="btn btn-primary">Eliminar</a>
-                                                                    <% } %>
-                                                        </div>
-
+                                            <div class="col-md-6">
+                                                <div class="product p-4">
+                                                    <div class="d-flex justify-content-between align-items-center">
+                                                        <div class="d-flex align-items-center"> <i class="fa fa-long-arrow-left"></i> <span class="ml-1">Creado por <%= namePost %> </span> </div> <i class="fa fa-shopping-cart text-muted"></i>
                                                     </div>
+                                                    <div class="mt-4 mb-3"> <span class="text-uppercase text-muted brand">Fecha: <%= data.CreateAt %></span>
+                                                        <h5 class="text-uppercase">
+                                                            <%= data.nombre %>
+                                                        </h5>
+                                                        <div class="price d-flex flex-row align-items-center"> <span class="act-price">Medida:</span>
+                                                            <div class="ml-2"> <small class="dis-price"> <%= data.medida.de %> cm </small><small class="dis-price">- <%= data.medida.hasta %> cm </small> </div>
+                                                        </div>
+                                                        <div class="price d-flex flex-row align-items-center"> <span class="act-price">Precio Propuesto: </span>
+                                                            <div class="ml-2"> <small class="dis-price"> S/. <%= data.precio %></small> </div>
+                                                        </div>
+                                                        <div class="price d-flex flex-row align-items-center"> <span class="act-price">Color:</span>
+                                                            <div class="ml-2"> <small class="dis-price"> <%= data.color %></small> </div>
+                                                        </div>
+                                                    </div>
+                                                    <p class="about">
+                                                        <%= data.descripcion %>
+                                                    </p>
+                                                    <div class="sizes mt-5">
+                                                        <h6>Talla:</h6> <label> <%= data.talla %></label>
+                                                    </div>
+                                                    <div class="cart mt-4 align-items-center"><a href="/productos" class="btn btn-danger text-uppercase mr-2 px-4">Volver</a></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
+
+                            </div>
+                        </div>
+
+
+
+
+                    </div>
+                    <div class="carousel-item">
+
+
+
+                        <form action="/producto/edit/<%= data._id %>" method="POST" enctype="multipart/form-data">
+                            <div class="container bg-light">
+
+
                                 <br/>
-                                <% } %>
-                                    <% } %>
-                    </li>
-                </ul>
-            </form>
+
+                                <div class="container bg-transparent">
+                                    <div class="row">
+                                        <div class="col">
+                                            <label for="exampleFormControlInput1">Nombre</label>
+                                            <input type="text" class="form-control" aria-label="Small" id="exampleFormControlInput1" aria-describedby="inputGroup-sizing-sm" name="nombre" value="<%= data.nombre %>" placeholder="Ingrese nombre" required>
+                                            <label for="exampleFormControlInput1">Descripcion</label>
+                                            <textarea type="text" class="form-control" aria-label="Small" id="exampleFormControlInput1" aria-describedby="inputGroup-sizing-sm" name="descripcion" id="exampleFormControlInput1" placeholder="Ingrese Descripcion" required><%= data.descripcion %></textarea>
+                                            <label for="exampleFormControlInput1">Precio</label>
+                                            <input type="number" class="form-control" aria-label="Small" id="exampleFormControlInput1" aria-describedby="inputGroup-sizing-sm" name="precio" value="<%= data.precio %>" placeholder="Ingrese precio" required>
+                                            <label for="exampleFormControlInput1">Color</label>
+                                            <input type="text" class="form-control" aria-label="Small" id="exampleFormControlInput1" aria-describedby="inputGroup-sizing-sm" name="color" value="<%= data.color %>" placeholder="Ingrese color" required>
+
+                                            <label for="exampleFormControlInput1">Talla</label>
+                                            <select name="talla" class="browser-default custom-select">
+                                                    <% if( data.talla == 'X') { %>
+                                                        <option value="XL">XL</option> 
+                                                    <option value="M">M</option>
+                                                    <option value="S">S</option>
+                                                    <option value="X" selected>X</option>
+                                                        <% } else if( data.talla == 'S'){  %>
+                                                            <option value="XL">XL</option> 
+                                                    <option value="M">M</option>
+                                                    <option value="S" selected>S</option>
+                                                    <option value="X">X</option>
+                                                            <%  } else if( data.talla == 'M'){%>
+                                                                <option value="XL">XL</option> 
+                                                    <option value="M" selected>M</option>
+                                                    <option value="S">S</option>
+                                                    <option value="X">X</option>
+                                                                <%  } else {%>
+                                                                    <option value="XL" selected>XL</option> 
+                                                    <option value="M">M</option>
+                                                    <option value="S">S</option>
+                                                    <option value="X">X</option>
+                                                                    <%  } %>
+                                                    
+                                                </select>
+                                            <br/>
+                                            <br>
+                                            <br>
+                                            <br>
+                                            <input type="submit" class="btn btn-success w-100" value="Modificar" />
+                                            <a href="/delprod/<%= data._id %> " class="btn btn-primary w-100">Eliminar</a>
+                                        </div>
+
+                                        <div class="col-5 bg-transparent">
+                                            <label for="exampleFormControlInput1">De</label>
+                                            <input type="number" class="form-control" aria-label="Small" id="exampleFormControlInput1" aria-describedby="inputGroup-sizing-sm" name="de" value="<%= data.medida.de %>" placeholder="Ingrese precio" required>
+                                            <label for="exampleFormControlInput1">Hasta</label>
+
+                                            <input type="number" class="form-control" aria-label="Small" id="exampleFormControlInput1" aria-describedby="inputGroup-sizing-sm" name="hasta" value="<%= data.medida.hasta %>" placeholder="Ingrese precio" required>
+                                            <br>
+                                            <% if( data.image === null ) { %>
+
+                                                <img src="/images/profile-default.png" width="400px" height="380px" />
+                                                <br/>
+                                                <% } else { %>
+                                                    <img src="https://imageuploadcv.s3.us-east-2.amazonaws.com/<%= data.ruta %>" width="400px" height="380px" />
+                                                    <br/>
+                                                    <% } %>
+                                                        <br/>
+
+                                                        <input type="file" name="image" required/>
+
+
+
+                                                        <br/>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+                <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Previous</span>
+                </a>
+                <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Next</span>
+                </a>
+            </div>
         </div>
 
-        <% } %>
+
+        <% } else { %>
+
+            <div class="container mt-5 mb-5">
+                <div class="row d-flex justify-content-center">
+                    <div class="col-md-10">
+                        <div class="card">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="images p-3">
+                                        <div class="text-center p-4">
+                                            <% if( data.image === null ) { %>
+                                                <img id="main-image" src="data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%22318%22%20height%3D%22180%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20318%20180%22%20preserveAspectRatio%3D%22none%22%3E%3Cdefs%3E%3Cstyle%20type%3D%22text%2Fcss%22%3E%23holder_158bd1d28ef%20text%20%7B%20fill%3Argba(255%2C255%2C255%2C.75)%3Bfont-weight%3Anormal%3Bfont-family%3AHelvetica%2C%20monospace%3Bfont-size%3A16pt%20%7D%20%3C%2Fstyle%3E%3C%2Fdefs%3E%3Cg%20id%3D%22holder_158bd1d28ef%22%3E%3Crect%20width%3D%22318%22%20height%3D%22180%22%20fill%3D%22%23777%22%3E%3C%2Frect%3E%3Cg%3E%3Ctext%20x%3D%22129.359375%22%20y%3D%2297.35%22%3EImage%3C%2Ftext%3E%3C%2Fg%3E%3C%2Fg%3E%3C%2Fsvg%3E"
+                                                    width="250" />
+                                                <% } else { %>
+                                                    <img id="main-image" src="https://imageuploadcv.s3.us-east-2.amazonaws.com/<%= data.ruta %>" width="350px" height="350px" />
+
+                                                    <% } %>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="product p-4">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <div class="d-flex align-items-center"> <i class="fa fa-long-arrow-left"></i> <span class="ml-1">Creado por <%= namePost %> </span> </div> <i class="fa fa-shopping-cart text-muted"></i>
+                                        </div>
+                                        <div class="mt-4 mb-3"> <span class="text-uppercase text-muted brand">Fecha: <%= data.CreateAt %></span>
+                                            <h5 class="text-uppercase">
+                                                <%= data.nombre %>
+                                            </h5>
+                                            <div class="price d-flex flex-row align-items-center"> <span class="act-price">Medida:</span>
+                                                <div class="ml-2"> <small class="dis-price"> <%= data.medida.de %> cm </small><small class="dis-price">- <%= data.medida.hasta %> cm </small> </div>
+                                            </div>
+                                            <div class="price d-flex flex-row align-items-center"> <span class="act-price">Precio Propuesto: </span>
+                                                <div class="ml-2"> <small class="dis-price"> S/. <%= data.precio %></small> </div>
+                                            </div>
+                                            <div class="price d-flex flex-row align-items-center"> <span class="act-price">Color:</span>
+                                                <div class="ml-2"> <small class="dis-price"> <%= data.color %></small> </div>
+                                            </div>
+                                        </div>
+                                        <p class="about">
+                                            <%= data.descripcion %>
+                                        </p>
+                                        <div class="sizes mt-5">
+                                            <h6>Talla:</h6> <label> <%= data.talla %></label>
+                                        </div>
+                                        <div class="cart mt-4 align-items-center"><a href="/productos" class="btn btn-danger text-uppercase mr-2 px-4">Volver</a></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <%  } %>
+
+
+
+
+
+
+
+
+                <!-- AQUI EMPIEZA COMENTARIOS -->
+
+                <br/>
+                <% if( Estesoy.role == 'ADMIN_ROLE' || usuario == userPost ) { %>
+
+                    <!-- Contenedor Principal -->
+                    <div class="comments-container">
+                        <h1>Comentarios</h1>
+
+                        <form method="POST" action="/producto/detalles/<%= data._id %>">
+                            <ul id="comments-list" class="comments-list">
+                                <li>
+                                    <div class="comment-main-level">
+                                        <!-- Avatar -->
+                                        <% if( Estesoy.image === null ) { %>
+                                            <div class="comment-avatar"><img src="/images/profile-default.png" alt=""></div>
+                                            <% } else if ( Estesoy.image > 0 ){ %>
+                                                <div class="comment-avatar"><img src="https://imageuploadcv.s3.us-east-2.amazonaws.com/<%= Estesoy.ruta %>" alt=""></div>
+                                                <% } else { %>
+                                                    <div class="comment-avatar"><img src="<%= Estesoy.image %>" alt=""></div>
+                                                    <% } %>
+                                                        <!-- Contenedor del Comentario -->
+                                                        <div class="comment-box">
+                                                            <div class="comment-head">
+                                                                <h6 class="comment-name by-author">
+                                                                    <%= nombreUsuario %>
+                                                                </h6>
+                                                            </div>
+                                                            <div class="comment-content">
+                                                                <textarea name="descripcion" class="comment-content" cols="86" required></textarea>
+                                                                <button type="submit" class="btn btn-primary">Comentar</button>
+                                                            </div>
+                                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </form>
+                        <form>
+                            <ul id="comments-list" class="comments-list">
+                                <li>
+                                    <% for(var i=0; i < comment.length; i++ ){ %>
+                                        <% if ( id == comment[i].producto   ) { %>
+                                            <div class="comment-main-level">
+                                                <!-- Avatar -->
+                                                <% if( comment[i].usuario.image === null ) { %>
+                                                    <div class="comment-avatar"><img src="/images/profile-default.png" alt=""></div>
+                                                    <% } else if ( comment[i].usuario.image > 0 ){ %>
+                                                        <div class="comment-avatar"><img src="https://imageuploadcv.s3.us-east-2.amazonaws.com/<%= comment[i].usuario.ruta %>" alt=""></div>
+                                                        <br/>
+                                                        <% } else { %>
+                                                            <div class="comment-avatar"><img src="<%= comment[i].usuario.image %>" alt=""></div>
+                                                            <% } %>
+
+                                                                <!-- Contenedor del Comentario -->
+                                                                <div class="comment-box">
+                                                                    <div class="comment-head">
+                                                                        <h6 class="comment-name by-author">
+                                                                            <%= comment[i].usuario.nombres %>
+                                                                        </h6>
+                                                                        <span>Publicado el <%= comment[i].CreateAt %>           <%= comment[i].hora %></span>
+                                                                        <i class="fa fa-reply"></i>
+                                                                        <i class="fa fa-heart"></i>
+                                                                    </div>
+                                                                    <div class="comment-content">
+                                                                        <%= comment[i].descripcion %>
+                                                                            <% if(  usuario === JSON.stringify(comment[i].usuario._id)  ) { %>
+                                                                                <br/>
+                                                                                <br/>
+                                                                                <a href="/delcoment/<%= comment[i]._id %> " class="btn btn-primary">Eliminar</a>
+                                                                                <% } %>
+                                                                    </div>
+
+                                                                </div>
+                                            </div>
+                                            <br/>
+                                            <% } %>
+                                                <% } %>
+                                </li>
+                            </ul>
+                        </form>
+                    </div>
+
+                    <% } %>
+                        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+                        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+                        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
 </body>
 
 </html>

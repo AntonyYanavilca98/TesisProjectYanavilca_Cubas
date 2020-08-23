@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Usuario = require('../models/usuario');
+const bcrypt = require('bcrypt');
 const upload = require('../service/file-upload');
 const { isAuthenticated } = require('../authenticacion/authenticacion');
 
@@ -42,6 +43,8 @@ router.post('/editar/profile/:id', isAuthenticated, (req, res, next) => {
             encontrado.nombres = body.nombres;
             encontrado.apellidos = body.apellidos;
             encontrado.email = body.email;
+            let pass = body.password;
+            encontrado.password = bcrypt.hashSync(pass, 10)
             encontrado.image = fileName;
             encontrado.ruta = filePath;
             encontrado.save();
